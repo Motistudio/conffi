@@ -1,7 +1,7 @@
 import isThentable from '../../../src/commons/promise/isThentable'
 import createOptionalGetter from '../../../src/lib/wrappers/optional'
 import createTestGetter from '../../../src/lib/wrappers/test'
-import createParseCallback from 'src/lib/wrappers/parse'
+import createParseCallback from '../../../src/lib/wrappers/parse'
 
 import type {Getter} from '../../../src/lib/types.t'
 

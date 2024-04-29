@@ -1,3 +1,5 @@
+import isThentable from '../../commons/promise/isThentable'
+
 import type {Getter, ApiGetter, Manipulator, GetterValue} from '../types.t'
 
 import text from '../manipulators/text'
@@ -9,7 +11,6 @@ import createParseGetter from '../wrappers/parse'
 import getEnvVar from './env'
 import getRuntimeVar from './runtime'
 import getFirstOf from './or'
-import isThentable from 'src/commons/promise/isThentable'
 
 const resolveManipulator = <T>(value: T | Promise<T>, manipulator: Manipulator<T>, errorMessage?: string): T | Promise<T> => {
   if (isThentable(value)) {
@@ -20,15 +21,6 @@ const resolveManipulator = <T>(value: T | Promise<T>, manipulator: Manipulator<T
   }
   return manipulator(value, errorMessage)
 }
-
-// const resolveGetter = <T>(key: string, value: T | Promise<T>, getter: Getter<T>, errorMessage?: string) => {
-//   if (isThentable(value)) {
-//     return value.then((val) => {
-//       return getter(key, val)
-//     })
-//   }
-//   return getter(key, value)
-// }
 
 /**
  * Sets the chainable api on a getter.

@@ -2,9 +2,12 @@
   "name": "conffi",
   "version": "1.0.0",
   "description": "A schema-based configuration loader",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "type": "module",
+  "files": ["/dist"],
   "scripts": {
+    "build": "npx tsc --project tsconfig.lib.json",
     "lint": "npx eslint",
     "test": "npx jest"
   },

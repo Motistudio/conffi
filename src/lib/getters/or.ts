@@ -1,4 +1,4 @@
-import isThentable from 'src/commons/promise/isThentable'
+import isThentable from '../../commons/promise/isThentable'
 import type {Getter, GetterValue} from '../types.t'
 
 const recursiveOr = <V extends GetterValue<any>, T extends Getter<V>>(key: string, value: V | undefined, getters: T[]): V => {

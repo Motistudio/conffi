@@ -1,4 +1,4 @@
-import isThentable from 'src/commons/promise/isThentable'
+import isThentable from '../../commons/promise/isThentable'
 import type {Getter} from '../types.t'
 
 type Tester = (value: any) => boolean | Promise<boolean>

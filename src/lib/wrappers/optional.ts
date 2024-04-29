@@ -1,4 +1,4 @@
-import isThentable from 'src/commons/promise/isThentable'
+import isThentable from '../../commons/promise/isThentable'
 import type {Getter, GetterType} from '../types.t'
 
 const createOptionalGetter = <T extends Getter<any>>(callback: T): Getter<GetterType<T> | undefined> => {
