@@ -1,23 +1,23 @@
-import text from '../../../src/lib/manipulators/text'
+import string from '../../../src/lib/manipulators/string'
 import number from '../../../src/lib/manipulators/number'
 import boolean from '../../../src/lib/manipulators/boolean'
 
 describe('Manipulators', () => {
-  describe('Text', () => {
+  describe('String', () => {
     test('Should load a normal text variable', () => {
       const value = 'text'
-      expect(text(value)).toBe(value)
+      expect(string(value)).toBe(value)
       const num = 123
-      expect(text(num)).toBe(String(num))
+      expect(string(num)).toBe(String(num))
       const bool = true
-      expect(text(bool)).toBe(String(bool))
+      expect(string(bool)).toBe(String(bool))
     })
 
     test('Should fail to load un-existing variable', () => {
-      expect(() => text(undefined)).toThrow()
-      expect(() => text(null)).toThrow()
-      expect(() => text(NaN)).toThrow()
-      expect(() => text('')).toThrow()
+      expect(() => string(undefined)).toThrow()
+      expect(() => string(null)).toThrow()
+      expect(() => string(NaN)).toThrow()
+      expect(() => string('')).toThrow()
     })
   })
 

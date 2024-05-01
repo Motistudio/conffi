@@ -11,9 +11,9 @@ export type GetterType<T extends Getter<any>> = T extends Getter<infer R> ? R : 
 
 type ApiFn<T extends (...args: any[]) => any> = {
   (...args: Parameters<T>): ReturnType<T>
-  text: () => ApiGetter<Getter<string>>
+  string: () => ApiGetter<Getter<string>>
   number: () => ApiGetter<Getter<number>>
-  bool: () => ApiGetter<Getter<boolean>>
+  boolean: () => ApiGetter<Getter<boolean>>
   optional: () => ApiGetter<Getter<ReturnType<T> | undefined>>
   test: (callback: (value: any) => boolean | Promise<boolean>) => ApiGetter<Getter<T>>,
   parse: <T>(callback: (value: any) => any) => ApiGetter<Getter<T>>

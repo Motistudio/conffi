@@ -16,11 +16,11 @@ describe('Config Type', () => {
   describe('Simple env config', () => {
     test('Should load a basic config', async () => {
       const create = createConfig<typeof environment>({
-        text: env('text').text(),
-        numericText: env('numericText').text(),
+        text: env('text').string(),
+        numericText: env('numericText').string(),
         number: env('number').number(),
         anotherNumber: env('anotherNumber').number(),
-        bool: env('bool').bool()
+        bool: env('bool').boolean()
       })
 
       await expect(create()).resolves.toMatchObject(environment)
@@ -33,12 +33,12 @@ describe('Config Type', () => {
       }
 
       const create = createConfig<typeof expectedEnv>({
-        text: env('text').text(),
+        text: env('text').string(),
         numericText: env('numericText'),
         numericText2: env('numericText2').number(),
         number: env('number').number(),
         anotherNumber: env('anotherNumber').number(),
-        bool: env('bool').bool()
+        bool: env('bool').boolean()
       })
 
       await expect(create({'numericText2': expectedEnv.numericText2})).resolves.toMatchObject(expectedEnv)
@@ -48,11 +48,11 @@ describe('Config Type', () => {
       const runtimeValues = {numericText: '456', bool: false}
 
       const create = createConfig<typeof environment>({
-        text: env('text').text(),
-        numericText: runtime().text(),
+        text: env('text').string(),
+        numericText: runtime().string(),
         number: env('number').number(),
         anotherNumber: env('anotherNumber').number(),
-        bool: runtime().bool()
+        bool: runtime().boolean()
       })
 
       await expect(create(runtimeValues)).resolves.toMatchObject({...environment, ...runtimeValues})
@@ -62,11 +62,11 @@ describe('Config Type', () => {
       const runtimeValues = {numericText: '456', bool: false}
 
       const create = createConfig<typeof environment>({
-        text: or(env('text').text()),
-        numericText: or(runtime().text(), env('runtimeText').text()),
+        text: or(env('text').string()),
+        numericText: or(runtime().string(), env('runtimeText').string()),
         number: env('number').number(),
         anotherNumber: env('anotherNumber').number(),
-        bool: or(env('bool').bool(), runtime().bool())
+        bool: or(env('bool').boolean(), runtime().boolean())
       })
 
       await expect(create(runtimeValues)).resolves.toMatchObject({...environment, numericText: runtimeValues.numericText})
@@ -100,7 +100,7 @@ describe('Config Type', () => {
       const create = createConfigType({
         num: runtime().number(),
         numPromise: runtime().parse((value) => Promise.resolve(number(value))),
-        bool: get(() => Promise.resolve('true')).bool()
+        bool: get(() => Promise.resolve('true')).boolean()
       })
 
       await expect(create(runtimeEnv)).resolves.toMatchObject({num: 5, numPromise: 5, bool: true})
@@ -111,9 +111,9 @@ describe('Config Type', () => {
     describe('Basic types', () => {
       test('Should get a textual value', async () => {
         const create = createConfig(({env}) => ({
-          textualVar: env('text').text(),
+          textualVar: env('text').string(),
           numericValue: env('number').number(),
-          booleanValue: env('bool').bool()
+          booleanValue: env('bool').boolean()
         }))
         await expect(create()).resolves.toMatchObject({
           textualVar: environment.text,
@@ -124,11 +124,11 @@ describe('Config Type', () => {
 
       test('Should fail for invalid types', async () => {
         await expect(createConfig(({env}) => ({text: env('not-existing-text')}))()).rejects.toThrow(/not-existing-text/)
-        await expect(createConfig(({env}) => ({text: env('not-existing-text').text()}))()).rejects.toThrow(/not-existing-text/)
+        await expect(createConfig(({env}) => ({text: env('not-existing-text').string()}))()).rejects.toThrow(/not-existing-text/)
         await expect(createConfig(({env}) => ({text: env('not-existing-number').number()}))()).rejects.toThrow(/not-existing-number/)
         await expect(createConfig(({env}) => ({text: env('text').number()}))()).rejects.toThrow(/text/)
-        await expect(createConfig(({env}) => ({text: env('not-existing-bool').bool()}))()).rejects.toThrow(/not-existing-bool/)
-        await expect(createConfig(({env}) => ({text: env('text').bool()}))()).rejects.toThrow(/text/)
+        await expect(createConfig(({env}) => ({text: env('not-existing-bool').boolean()}))()).rejects.toThrow(/not-existing-bool/)
+        await expect(createConfig(({env}) => ({text: env('text').boolean()}))()).rejects.toThrow(/text/)
       })
     })
 
@@ -137,11 +137,11 @@ describe('Config Type', () => {
         const runtimeValues = {numericText: '456', bool: false, age: 21, name: 'moti'}
 
         const create = createConfig(({or, env, runtime}) => ({
-          text: or(env('text').text()),
-          numericText: or(runtime().text(), env('runtimeText').text()),
+          text: or(env('text').string()),
+          numericText: or(runtime().string(), env('runtimeText').string()),
           number: env('number').number(),
           anotherNumber: env('anotherNumber').number(),
-          bool: or(env('bool').bool(), runtime().bool()),
+          bool: or(env('bool').boolean(), runtime().boolean()),
           optional: env('optional').optional(),
           age: runtime().number().test((num) => num > 18),
           doubleNum: env('anotherNumber').number().parse((n: number) => {

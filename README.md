@@ -97,9 +97,9 @@ const createMainConfig = createConfig(({env, runtime, or, get}) => ({
 ### Manipulators
 Conffi offers manipulators to transform retrieved values. These manipulators provide a chainable API for easy manipulation:
 
-* `text()`: Converts the value to a string.
+* `string()`: Converts the value to a string.
 * `number()`: Converts the value to an integer.
-* `bool()`: Converts the value to a boolean.
+* `boolean()`: Converts the value to a boolean.
 * `test(customTest: (value: any) => boolean | Promise<boolean>)`: Performs a custom test on the value, throwing an error with a provided message if the test fails. Supports asynchronous tests.
 * `parse(customParser: <T>(value: any) => T | Promise<T>)`: Allows custom parsing logic for transforming the value.
 
@@ -109,9 +109,9 @@ By leveraging getters and manipulators, you can ensure your configuration values
 import {createConfig} from 'conffi'
 
 const createMainConfig(({env, runtime, or, get}) => ({
-  text: env('textual').text(),
+  text: env('textual').string(),
   number: env('numeric').number(), // translates to an integer
-  bool: env('boolean').bool(),
+  bool: env('boolean').boolean(),
   customTest: env('custom').number().test((value) => value > 5, 'Value should be bigger'), // Custom tests, supports promises
   customValue: env('custom').parse((value) => Number.parseInt(value, 10)) // Translating to int ourselves
 }))

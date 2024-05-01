@@ -2,7 +2,7 @@ import isThentable from '../../commons/promise/isThentable'
 
 import type {Getter, ApiGetter, Manipulator, GetterValue} from '../types.t'
 
-import text from '../manipulators/text'
+import str from '../manipulators/string'
 import num from '../manipulators/number'
 import bool from '../manipulators/boolean'
 import createOptionalGetter from '../wrappers/optional'
@@ -31,7 +31,7 @@ const resolveManipulator = <T>(value: T | Promise<T>, manipulator: Manipulator<T
  */
 const setApi = <T extends Getter<any>>(callback: T): ApiGetter<T> => {
   // const textCallback = ((key, value) => text(callback(key, value), `${key} is not a string`)) as Getter<string>
-  const textCallback = ((key, value) => resolveManipulator(callback(key, value), text, `${key} is not a string`)) as Getter<string>
+  const textCallback = ((key, value) => resolveManipulator(callback(key, value), str, `${key} is not a string`)) as Getter<string>
   // const numberCallback = ((key, value) => num(callback(key, value), `${key} is not a number`)) as Getter<number>
   const numberCallback = ((key, value) => resolveManipulator(callback(key, value), num, `${key} is not a number`)) as Getter<number>
   // const boolCallback = ((key, value) => bool(callback(key, value), `${key} is not a boolean`)) as Getter<boolean>
@@ -39,9 +39,9 @@ const setApi = <T extends Getter<any>>(callback: T): ApiGetter<T> => {
   const optionalCallback = createOptionalGetter(callback) as Getter<T | undefined>
 
   Object.assign(callback, {
-    text: () => setApi(textCallback),
+    string: () => setApi(textCallback),
     number: () => setApi(numberCallback),
-    bool: () => setApi(boolCallback),
+    boolean: () => setApi(boolCallback),
     optional: () => setApi(optionalCallback), // theoretically should look like test and parse, but it doesn't accept any parameters so it doesn't matter
     test: (...args: Parameters<typeof createTestGetter>) => {
       const testGetter = createTestGetter(...args)
