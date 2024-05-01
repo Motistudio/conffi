@@ -7,11 +7,7 @@
     "target": "ES2019",
     "module": "CommonJS",
     "moduleResolution": "Node",
-    "declaration": true,
-    "resolveJsonModule": true,
     "outDir": "./dist",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
     "strict": true
   },
   "include": ["**/*"]
