@@ -1,6 +1,6 @@
 import {pathsToModuleNameMapper} from 'ts-jest'
 
-import {default as config} from './tsconfig.json' assert {type: 'json'}
+import {default as config} from './tsconfig.json' with {type: 'json'}
 
 const {compilerOptions} = config
 
